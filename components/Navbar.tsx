@@ -14,7 +14,7 @@ export default function Navbar() {
       <motion.div
         className="fixed top-0 left-1/2 h-[4.5rem] w-full 
       rounded-none  
-      bg-blue-600 bg-opacity-40 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem]
+      bg-blue-600 bg-opacity-60 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem]
       sm:top-6 sm:h-[3.25rem] sm:w-[26rem] sm:rounded-full sm:border sm:border-white sm:border-opacity-30"
         initial={{ scale: 0, x: "-50%", opacity: 0 }}
         animate={{ scale: 1, x: "-50%", opacity: 1 }}
@@ -26,7 +26,7 @@ export default function Navbar() {
       >
         <ul
           className="flex w-[22rem] flex-wrap items-center justify-center gap-x-3 gap-y-1 
-        text-[0.9rem] font-medium text-gray-100 sm:w[initial] sm:flex-nowrap sm:gap-5"
+        text-[0.9rem] font-medium sm:w[initial] sm:flex-nowrap sm:gap-5"
         >
           <motion.li
             className="h-3/4 flex items-center justify-center relative"
@@ -52,7 +52,7 @@ export default function Navbar() {
                 damping: 30
               }}
             >
-              <Link href={link.route} className="flex w-full items-center justify-center px-3 py-3 hover:text-white transition">
+              <Link href={link.route} className="flex w-full items-center justify-center px-3 py-3 hover:text-yellow-400 transition">
                 {link.name}
                 {pathname === link.route && (
                   <AnimatePresence>
