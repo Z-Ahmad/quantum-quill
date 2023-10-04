@@ -14,7 +14,7 @@ export default function Intro() {
           <h2 className="pt-10 text-2xl sm:text-4xl">Combine artistry and AI</h2>
           <Link
             href="/create"
-            className="group flex items-center justify-center px-3 py-3 mt-10 text-2xl font-medium bg-blue-600 rounded-full focus:scale-110 hover:scale-110 active:scale-105 transition"
+            className="group flex items-center justify-center px-3 py-3 mt-10 text-gray-200 text-2xl font-medium bg-blue-400 rounded-full focus:scale-110 hover:scale-110 hover:text-white active:scale-105 active:text-white transition"
           >
             <div>
             Get Started

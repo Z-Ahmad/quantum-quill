@@ -21,7 +21,7 @@ export default function Navbar() {
       ></motion.div>
 
       <nav
-        className="flex fixed top-[0.15rem] left-1/2 h-12 -translate-x-1/2
+        className="text-gray-200 flex fixed top-[0.15rem] left-1/2 h-12 -translate-x-1/2
       py-2 sm:top-[1.7rem] sm:h-[initial] sm:py-0"
       >
         <ul
@@ -52,21 +52,25 @@ export default function Navbar() {
                 damping: 30
               }}
             >
-              <Link href={link.route} className="flex w-full items-center justify-center px-3 py-3 hover:text-yellow-400 transition">
+              <Link
+                href={link.route}
+                className={`flex w-full items-center justify-center px-3 py-3 
+                hover:text-white transition ${pathname === link.route ? "text-white" : ""}`}
+              >
                 {link.name}
                 {pathname === link.route && (
                   <AnimatePresence>
-                  <motion.span
-                    className="bg-blue-800 bg-opacity-30 rounded-full absolute inset-0 -z-10"
-                    layoutId="activeSection"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 380,
-                      damping: 30
-                    }}
-                  ></motion.span>
+                    <motion.span
+                      className="bg-blue-800 bg-opacity-30 rounded-full absolute inset-0 -z-10"
+                      layoutId="activeSection"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30
+                      }}
+                    ></motion.span>
                   </AnimatePresence>
                 )}
               </Link>
