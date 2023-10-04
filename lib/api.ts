@@ -9,7 +9,7 @@ interface SyllableResponse {
 }
 
 // Create a function to check syllables for a single word
-export async function checkSyllables(word: string): Promise<number> {
+export async function countSyllables(word: string): Promise<number> {
   try {
     const response = await axios.post<SyllableResponse>(
       `${baseURL}/syllable`,
