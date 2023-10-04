@@ -2,7 +2,7 @@ import axios from "axios";
 import OpenAi from 'openai'
 
 const myAPIKey = process.env.OPENAI_API_KEY;
-const baseURL = "http://zakiahmad.pythonanywhere.com";
+const baseURL = "https://zakiahmad.pythonanywhere.com";
 const openai = new OpenAi({
   apiKey: myAPIKey,
   dangerouslyAllowBrowser: true
