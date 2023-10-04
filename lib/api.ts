@@ -20,17 +20,19 @@ export async function countSyllables(line: string): Promise<number> {
     const words = line.split(" ");
     // console.log("words", words)
     for(let word of words){
-      const response = await axios.post<SyllableResponse>(
-        `${baseURL}/syllable`,
-        { word },
-        {
-          headers: {
-            "Content-Type": "application/json"
+      if(word !== '' && word!== ' '){
+        const response = await axios.post<SyllableResponse>(
+          `${baseURL}/syllable`,
+          { word },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
           }
-        }
-      );
-      count += response.data.syllables;
+        );
+        count += response.data.syllables;
     }
+  }
     return count;
     
   } catch (error) {
@@ -40,10 +42,12 @@ export async function countSyllables(line: string): Promise<number> {
 }
 
 export async function generateLine(topic: string){
+  // console.log(topic)
   const chatCompletion = await openai.chat.completions.create({
     messages: [{role: 'user', content: 'Generate 1st line (5 syllable) of a haiku about ' + topic}], 
     model: 'gpt-3.5-turbo',
   });
-
-  console.log(chatCompletion.choices[0].message.content)
+  const content = chatCompletion.choices[0].message.content
+  // console.log(content)
+  return content
 }

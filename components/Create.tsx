@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { countSyllables} from "@/lib/api"; 
 import { generateLine } from "@/lib/api";
-import SyllableCheckButton from "@/components/SyllableCheckButton";
+import SyllableCheckButton from "./SyllableCheckButton";
+import LineGenerationButton from "./LineGenerationButton";
 
 export default function Create() {
   const [inputLines, setInputLines] = useState<string[]>(["", "", ""]); // tracks values in each line
@@ -36,7 +37,8 @@ export default function Create() {
 
 
   const handleGenerateLine = async (topic: string) => {
-    await generateLine(topic);
+    const content = await generateLine(topic);
+    console.log(content);
   }
 
 
@@ -63,14 +65,20 @@ export default function Create() {
         </div>
       </form>
       
-      <form action={async ()=>{
-        await checkSyllableCount()
-        }}
-      >
-        <SyllableCheckButton/>
-      </form>
-      
-      
+      <div className="flex gap-2">
+        <form action={async ()=>{
+          await checkSyllableCount()
+          }}
+        >
+          <SyllableCheckButton/>
+        </form>
+        
+        <form action={async()=>{
+          await handleGenerateLine("nature")
+        }}>
+          <LineGenerationButton/>
+        </form>
+      </div>
 
     </div>
   );
