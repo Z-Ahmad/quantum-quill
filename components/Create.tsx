@@ -7,8 +7,7 @@ import LineGenerationButton from "./LineGenerationButton";
 
 export default function Create() {
   const [inputLines, setInputLines] = useState<string[]>(["", "", ""]); // tracks values in each line
-  const [inputBorders, setInputBorders] = useState<string[]>(["", "", ""]); // tracks border colors for each line (green if valid, else red)
-
+  const [inputBorders, setInputBorders] = useState<string[]>(["", "", ""]); // tracks border colors for lines green or red
   const handleLineChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const newInputLines = [...inputLines];
     newInputLines[index] = e.target.value;
@@ -38,7 +37,10 @@ export default function Create() {
 
   const handleGenerateLine = async (topic: string) => {
     const content = await generateLine(topic);
+    //set line1 = content
+    setInputLines([(content || '') as string, inputLines[1], inputLines[2]]);
     console.log(content);
+    await checkSyllableCount();
   }
 
 
@@ -65,7 +67,7 @@ export default function Create() {
         </div>
       </form>
       
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-col sm:flex-row">
         <form action={async ()=>{
           await checkSyllableCount()
           }}
