@@ -1,7 +1,12 @@
 import axios from "axios";
+import OpenAi from 'openai'
 
-// Define the base URL for API
+const myAPIKey = process.env.OPENAI_API_KEY;
 const baseURL = "http://zakiahmad.pythonanywhere.com";
+const openai = new OpenAi({
+  apiKey: myAPIKey,
+  dangerouslyAllowBrowser: true
+});
 
 // Define types for API responses
 interface SyllableResponse {
@@ -26,4 +31,13 @@ export async function countSyllables(word: string): Promise<number> {
     console.error("Error checking syllables:", error);
     return -1; // Handle errors gracefully, return -1 or another appropriate value
   }
+}
+
+export async function generateLine(topic: string){
+  const chatCompletion = await openai.chat.completions.create({
+    messages: [{role: 'user', content: 'Generate 1st line (5 syllable) of a haiku about ' + topic}], 
+    model: 'gpt-3.5-turbo',
+  });
+
+  console.log(chatCompletion.choices[0].message.content)
 }
