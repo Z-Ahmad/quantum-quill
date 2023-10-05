@@ -47,7 +47,12 @@ export default function Create() {
   }
 
   const handleGenerateLine = async (topic: string) => {
-    const content = await generateLine(topic);
+    let content = await generateLine(topic);
+    //while content is more than 5 syllables, keep generating
+    while (content && (await countSyllables(content)) > 5) {
+      // console.log(content)
+      content = await generateLine(topic);
+    }
 
     //set line1 = content
     setInputLines([(content || '') as string, inputLines[1], inputLines[2]]);
@@ -58,12 +63,13 @@ export default function Create() {
 
   const notify = (counts:Number[]) => {
     let wrongLines = [];
+
     for (let i in counts) {
       if (counts[i] !== format[i]) {
         wrongLines.push(Number(i)+1);
       }
     }
-    console.log(wrongLines);
+
     let message = `Line(s) ${wrongLines.join(", ")} are incorrect.`
     for (let i in counts) {
       if (counts[i] !== format[i]){
