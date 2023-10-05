@@ -104,11 +104,13 @@ export default function Create() {
         <div className="flex flex-col justify-center items-center gap-y-3 mb-5 sm:mb-10">
           {inputLines.map((line, index) => (
             <div key={index} className="flex items-center gap-3">
-              <label htmlFor={`line${index + 1}`} className="w-8 text-center">
+              <label htmlFor={`line${index + 1}`} className="text-center font-semibold">
                 {index + 1}
               </label>
               <input
-                className={`border rounded-md px-3 py-2 w-full sm:w-[20rem] ${inputBorders[index]}`}
+                className={`border rounded-md px-3 py-2 
+                ${inputBorders[index]} 
+                ${Number(index) === 1 ? "w-[20rem]" : "w-[15rem]"}`}
                 type="text"
                 name={`line${index + 1}`}
                 id={`line${index + 1}`}
@@ -128,7 +130,7 @@ export default function Create() {
             notify(counts);
           }}
         >
-          <SyllableCheckButton />
+          <SyllableCheckButton/>
         </form>
 
         <form
