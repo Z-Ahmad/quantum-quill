@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { countSyllables} from "@/lib/api"; 
 import { generateLine } from "@/lib/api";
 import SyllableCheckButton from "./SyllableCheckButton";
@@ -53,9 +54,9 @@ export default function Create() {
 
 
   return (
-    <div>
+    <motion.div className="flex flex-col justify-center items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.325 }}>
       <form action="" className="flex flex-col justify-center items-center">
-        <h2 className="text-center text-lg">Create a Haiku</h2>
+        <h2 className="text-center text-lg font-semibold">Create a Haiku</h2>
         <p className="text-center tex-md mb-10">(5-7-5)</p>
         <div className="flex flex-col justify-center items-center gap-y-3 mb-5 sm:mb-10">
           {inputLines.map((line, index) => (
@@ -90,25 +91,26 @@ export default function Create() {
             await handleGenerateLine(topic);
           }}
         >
+          <h3 className="text-center text-md mt-8 mb-3 font-semibold">Get a Creative Boost from GPT to Begin Your Haiku</h3>
           <div className="flex flex-col sm:flex-row gap-4 items-center">
             <div>
               <label className="text-center" htmlFor="topic">
                 Topic:{" "}
               </label>
               <input
-                className="border rounded-md px-2 py-1"
+                className="border rounded-md px-3 py-2"
                 type="text"
                 name="topic"
                 id="topic"
                 onChange={(e) => handleTopicChange(e)}
                 value={topic}
                 autoComplete="off"
-                />
-              </div>
+              />
+            </div>
             <LineGenerationButton />
           </div>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 }
