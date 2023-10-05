@@ -45,11 +45,19 @@ export async function countSyllables(line: string): Promise<number> {
 
 export async function generateLine(topic: string){
   // console.log(topic)
+  let reqContent = "Generate 1st line (5 syllable) of a haiku"
+  //if topic is not empty, add topic to message
+  if(topic !== '' && topic !== ' '){
+    reqContent = "Generate 1st line (5 syllable) of a haiku about " + topic
+  }
+
+  // console.log(messageContent)
+
   const chatCompletion = await openai.chat.completions.create({
-    messages: [{role: 'user', content: 'Generate 1st line (5 syllable) of a haiku about ' + topic + "avoid punctuation and make sure it's 5 syllables"}], 
+    messages: [{role: 'user', content: reqContent}], 
     model: 'gpt-3.5-turbo',
   });
-  const content = chatCompletion.choices[0].message.content
+  const resContent = chatCompletion.choices[0].message.content
   // console.log(content)
-  return content
+  return resContent
 }

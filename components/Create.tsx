@@ -10,7 +10,7 @@ import LineGenerationButton from "./LineGenerationButton";
 export default function Create() {
   const [inputLines, setInputLines] = useState<string[]>(["", "", ""]); // tracks values in each line
   const [inputBorders, setInputBorders] = useState<string[]>(["", "", ""]); // tracks border colors for lines green or red
-  const [topic, setTopic] = useState<string>("nature"); // tracks topic for line generation
+  const [topic, setTopic] = useState<string>(""); // tracks topic for line generation
   const format = [5, 7, 5]; // tracks syllable format for haiku
 
   const handleLineChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -150,7 +150,7 @@ export default function Create() {
                 name="topic"
                 id="topic"
                 onChange={(e) => handleTopicChange(e)}
-                value={topic}
+                placeholder="nature, love, etc."
                 autoComplete="off"
               />
             </div>
