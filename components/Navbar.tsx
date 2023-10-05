@@ -38,7 +38,7 @@ export default function Navbar() {
               damping: 30
             }}
           >
-            <Image src={"/logo.svg"} alt={"Quantum Quill"} width={20} height={20}></Image>
+            <Image src={"/logo.svg"} alt={"Quantum Quill"} width={30} height={30}></Image>
           </motion.li>
           {links.map((link) => (
             <motion.li
