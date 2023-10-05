@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import toast from 'react-hot-toast';
 import { countSyllables} from "@/lib/api"; 
 import { generateLine } from "@/lib/api";
 import SyllableCheckButton from "./SyllableCheckButton";
@@ -10,6 +11,7 @@ export default function Create() {
   const [inputLines, setInputLines] = useState<string[]>(["", "", ""]); // tracks values in each line
   const [inputBorders, setInputBorders] = useState<string[]>(["", "", ""]); // tracks border colors for lines green or red
   const [topic, setTopic] = useState<string>("nature"); // tracks topic for line generation
+  const format = [5, 7, 5]; // tracks syllable format for haiku
 
   const handleLineChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const newInputLines = [...inputLines];
@@ -23,11 +25,14 @@ export default function Create() {
 
   const checkSyllableCount = async () => {
     let counts = [];
-    const format = [5, 7, 5];
-    const newInputBorders = [...inputBorders];
     for (let line of inputLines) {
       counts.push(await countSyllables(line));
     }
+    return counts;
+  };
+
+  const updateInputBorder = (counts:Number[])=>{
+    const newInputBorders = [...inputBorders];
     // Update inputBorders based on syllable counts
     for (let i in counts) {
       if (counts[i] === format[i]) {
@@ -39,8 +44,7 @@ export default function Create() {
 
     //set the updated inputBorders state
     setInputBorders(newInputBorders);
-  };
-
+  }
 
   const handleGenerateLine = async (topic: string) => {
     const content = await generateLine(topic);
@@ -52,6 +56,34 @@ export default function Create() {
     setInputBorders(newInputBorders);
   }
 
+  const notify = (counts:Number[]) => {
+    let wrongLines = [];
+    for (let i in counts) {
+      if (counts[i] !== format[i]) {
+        wrongLines.push(Number(i)+1);
+      }
+    }
+    console.log(wrongLines);
+    let message = `Line(s) ${wrongLines.join(", ")} are incorrect.`
+    for (let i in counts) {
+      if (counts[i] !== format[i]){
+        message += `\nLine ${Number(i)+1} has ${counts[i]} syllables, requires ${format[i]}.`
+      }
+    }
+
+    if (wrongLines.length > 0) {
+      toast.error(message, {
+        duration: 6000,
+        }
+      );
+      return;
+    }
+
+    toast.success("Haiku Format is Correct!", {
+      duration: 4000,
+      }
+    );
+  };
 
   return (
     <motion.div className="flex flex-col justify-center items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.325 }}>
@@ -80,7 +112,9 @@ export default function Create() {
       <div className="flex gap-2 flex-col justify-center items-center">
         <form
           action={async () => {
-            await checkSyllableCount();
+            const counts = await checkSyllableCount();
+            updateInputBorder(counts);
+            notify(counts);
           }}
         >
           <SyllableCheckButton />
