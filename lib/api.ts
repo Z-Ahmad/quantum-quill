@@ -17,7 +17,9 @@ interface SyllableResponse {
 export async function countSyllables(line: string): Promise<number> {
   try {
     let count = 0;
-    const words = line.split(" ");
+    let words = line.split(" ");
+    //remove punctuation
+    words = words.map(word => word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""))
     // console.log("words", words)
     for(let word of words){
       if(word !== '' && word!== ' '){
@@ -44,7 +46,7 @@ export async function countSyllables(line: string): Promise<number> {
 export async function generateLine(topic: string){
   // console.log(topic)
   const chatCompletion = await openai.chat.completions.create({
-    messages: [{role: 'user', content: 'Generate 1st line (5 syllable) of a haiku about ' + topic}], 
+    messages: [{role: 'user', content: 'Generate 1st line (5 syllable) of a haiku about ' + topic + "avoid punctuation and make sure it's 5 syllables"}], 
     model: 'gpt-3.5-turbo',
   });
   const content = chatCompletion.choices[0].message.content
