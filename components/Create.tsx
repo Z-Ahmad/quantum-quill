@@ -80,13 +80,18 @@ export default function Create() {
     if (wrongLines.length > 0) {
       toast.error(message, {
         duration: 6000,
+        style: {
+          background: "#f7b2b2"
         }
-      );
+      });
       return;
     }
 
     toast.success("Haiku Format is Correct!", {
       duration: 4000,
+      style: {
+        background: "#b2f7b2"
+      }
       }
     );
   };
